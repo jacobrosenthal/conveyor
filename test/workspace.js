@@ -18,87 +18,70 @@ describe('conveyor', function(){
 
   it('#adds a board', function(done){
 
-    conveyor.addBoard(name, bs2, function(err){
-      expect(err).toNotExist();
-      expect(conveyor.boards).toExist();
-      expect(Object.keys(conveyor.boards)).toInclude(name);
+    conveyor.addBoard(name, bs2);
+    expect(conveyor.boards).toExist();
+    expect(Object.keys(conveyor.boards)).toInclude(name);
 
-      done();
-    });
+    done();
   });
 
   it('#errors adding a board that exists', function(done){
 
+    function invalid(){
+      conveyor.addBoard(name, bs2);
+    }
 
-    conveyor.addBoard(name, bs2, function(err){
-
-      conveyor.addBoard(name, bs2, function(err){
-        expect(err).toExist();
-        expect(err.message).toEqual('Board exists');
-
-        done();
-      });
-    });
+    conveyor.addBoard(name, bs2);
+    expect(invalid).toThrow(/Board exists/);
+    done();
   });
 
 
   it('#errors getting a board that doesnt exist', function(done){
 
-    conveyor.getBoard(name, function(err, board){
-      expect(err).toExist();
-      expect(err.message).toEqual('Board does not exist');
+    function invalid(){
+      conveyor.getBoard(name);
+    }
 
-      done();
-    });
+    expect(invalid).toThrow(/Board does not exist/);
+    done();
   });
 
   it('#gets board', function(done){
 
-    conveyor.addBoard(name, bs2, function(err){
-
-      conveyor.getBoard(name, function(err, board){
-        expect(err).toNotExist();
-        expect(board).toExist();
-        expect(board).toEqual(bs2);
-
-        done();
-      });
-    });
+    conveyor.addBoard(name, bs2);
+    var board = conveyor.getBoard(name);
+    expect(board).toEqual(bs2);
+    done();
   });
 
   it('#errors removing non existant board', function(done){
 
-    conveyor.removeBoard(name, function(err){
-      expect(err).toExist();
-      expect(err.message).toEqual('Board does not exist');
+    function invalid(){
+      conveyor.removeBoard(name);
+    }
 
-      done();
-    });
+    expect(invalid).toThrow(/Board does not exist/);
+    done();
   });
 
   it('#removes a board', function(done){
 
-    conveyor.addBoard(name, bs2, function(err){
+    function valid(){
+      conveyor.removeBoard(name);
+    }
 
-      conveyor.removeBoard(name, function(err){
-        expect(err).toNotExist();
-
-        done();
-      });
-    });
+    conveyor.addBoard(name, bs2);
+    expect(valid).toNotThrow();
+    done();
   });
 
   it('#lists boards', function(done){
 
-    conveyor.addBoard(name, bs2, function(err){
+    conveyor.addBoard(name, bs2);
+    var boards = conveyor.listBoards();
+    expect(Object.keys(boards)).toInclude(name);
+    done();
 
-      conveyor.listBoards(function(err, boards){
-        expect(err).toNotExist();
-        expect(boards).toExist();
-        expect(Object.keys(boards)).toInclude(name);
-
-        done();
-      });
-    });
   });
 });
