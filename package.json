@@ -1,0 +1,29 @@
+{
+  "name": "conveyor",
+  "version": "0.0.0",
+  "description": "Irken plugin exposing boards",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacobrosenthal/conveyor"
+  },
+  "keywords": [
+    "irken",
+    "boards"
+  ],
+  "author": "Jacob Rosenthal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacobrosenthal/conveyor/issues"
+  },
+  "homepage": "https://github.com/jacobrosenthal/conveyor",
+  "devDependencies": {
+    "expect": "^1.6.0",
+    "mocha": "^2.2.1"
+  },
+  "dependencies": {
+  }
+}
